@@ -11,6 +11,8 @@ import matplotlib.ticker as ticker
 import copy
 import math
 import matplotlib as mpl
+import six
+import pandas as pd
 
 import importlib
 
@@ -206,7 +208,7 @@ class Model:
         cls = self.cls
         sentiment = self.sentiment
         p_dict, n_dict = self.explain_coef()
-        import pandas as pd
+
     #     sentence_vect = clean(sentence)
         word_list = []
         coef_list = []
@@ -387,11 +389,11 @@ class Model:
     #     print("Remaining words in the vec:")
     #     print(sentence_vect)
         df = self.find_coef(sentence_vect, tfidf_vect)
-        df = df.style.applymap(self.color_negative_red, subset=['Coef','Contribution']).\
+        df_style = df.style.applymap(self.color_negative_red, subset=['Coef','Contribution']).\
             apply(self.highlight_max, subset=['Coef','Contribution']).\
             apply(self.highlight_min, subset=['Coef','Contribution'])
     #     df = df.style.apply(highlight_max)
-        return df,res
+        return df,df_style,res
 
 
     # output = []
@@ -429,7 +431,7 @@ class Model:
         output.append(input_string) # original sentence
         s = self.predict(input_string)
         output.append(s) # prediction
-        df, s = self.analysis(input_string)
+        df,df_style,s = self.analysis(input_string)
         output.append(s) # analysis
         
         figs = self.generate_graphs(input_string)
@@ -437,10 +439,16 @@ class Model:
         figs[1].savefig("5.png")
         figs[2].savefig("6.png")
         
-        import imgkit
-        html = df.render()
-        options = {"xvfb": ""}
-        imgkit.from_string(html, "7.png")#, options=options)
+        decimals = pd.Series([3,5,5], index=['Contribution', 'tfidf val', 'Coef'])
+        df = df.round(decimals)
+        f = render_mpl_table(data=df, header_columns=0, col_width=2.5)
+        f.savefig('7.png')
+        
+        
+#         import imgkit
+#         html = df.render()
+#         options = {"xvfb": ""}
+#         imgkit.from_string(html, "7.png")#, options=options)
         
         output.append(4)
         output.append(5)
@@ -450,8 +458,31 @@ class Model:
         dic = {4:'4.png', 5:'5.png', 6:'6.png', 7:'7.png'}
         return output, dic
     
+def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
+                 header_color='#40466e', row_colors=['#f1f1f2', 'w'], edge_color='w',
+                 bbox=[0, 0, 1, 1], header_columns=0,
+                 ax=None, **kwargs):
+    if ax is None:
+        size = (np.array(data.shape[::-1]) + np.array([0, 1])) * np.array([col_width, row_height])
+        fig, ax = plt.subplots(figsize=size)
+        ax.axis('off')
+
+    mpl_table = ax.table(cellText=data.values, bbox=bbox, colLabels=data.columns, **kwargs)
+
+    mpl_table.auto_set_font_size(False)
+    mpl_table.set_fontsize(font_size)
+
+    for k, cell in  six.iteritems(mpl_table._cells):
+        cell.set_edgecolor(edge_color)
+        if k[0] == 0 or k[1] < header_columns:
+            cell.set_text_props(weight='bold', color='w')
+            cell.set_facecolor(header_color)
+        else:
+            cell.set_facecolor(row_colors[k[0]%len(row_colors) ])
+    return ax.get_figure()
+    
 if __name__ == "__main__":
     m = Model()
-    o,d = m.pipeline("Excellent")
+    o,d = m.pipeline(m.sentiment.train_data[123])
     print(o)
     print(d)
