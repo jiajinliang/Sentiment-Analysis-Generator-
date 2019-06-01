@@ -13,6 +13,7 @@ import math
 import matplotlib as mpl
 import six
 import pandas as pd
+import subprocess
 
 import importlib
 
@@ -290,7 +291,7 @@ class Model:
         words = [w for c,w in l]
         coefs = [c for c,w in l]
 
-        fig = plt.figure(figsize=(15,15))
+        fig = plt.figure(figsize=(30,15))
         colors = ['red' if c < 0 else 'blue' for c in coefs]
         plt.bar(words, coefs, color=colors)
         plt.xlabel('Word', fontsize=20)
@@ -333,7 +334,7 @@ class Model:
 
         mpl.rcParams['font.size'] = 20
 
-        fig = plt.figure(figsize=(5,5))
+        fig = plt.figure(figsize=(10,5))
         labels = ["Negative", "Positive"]
         colors = ['red', 'blue']
         explode = (0.1, 0)
@@ -439,12 +440,17 @@ class Model:
         figs[1].savefig("5.png")
         figs[2].savefig("6.png")
         
+        # dian's method using matplotlib to plot a DataFrame as table and 
         decimals = pd.Series([3,5,5], index=['Contribution', 'tfidf val', 'Coef'])
         df = df.round(decimals)
         f = render_mpl_table(data=df, header_columns=0, col_width=2.5)
         f.savefig('7.png')
         
-        
+        to_html(df_style,'table.html')
+        subprocess.call(
+            'wkhtmltoimage -f png --width 0 table.html 8.png', shell=True)
+
+        # this library works fine on linux and jupyter, but not supporting windows
 #         import imgkit
 #         html = df.render()
 #         options = {"xvfb": ""}
@@ -454,8 +460,10 @@ class Model:
         output.append(5)
         output.append(6)
         output.append(7)
+        output.append(8)
+
         
-        dic = {4:'4.png', 5:'5.png', 6:'6.png', 7:'7.png'}
+        dic = {0:'s', 4:'4.png', 5:'5.png', 6:'6.png', 7:'7.png', 8:'8.png'}
         return output, dic
     
 def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
@@ -480,6 +488,11 @@ def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
         else:
             cell.set_facecolor(row_colors[k[0]%len(row_colors) ])
     return ax.get_figure()
+
+def to_html(df_style, path):
+    f = open(path,'w')
+    f.write(df_style.render())
+    f.close()
     
 if __name__ == "__main__":
     m = Model()
