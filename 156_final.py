@@ -84,7 +84,9 @@ class Ui_Dialog(object):
         self.gridLayout_2.addLayout(self.gridLayout, 1, 0, 1, 2)
 
 
-
+        self.f=self.content.font()
+        self.f.setPointSize(33) # sets the size to 30
+        self.content.setFont(self.f)
 
         #self.label.setAlignment(Qt.AlignCenter)
         self.page_number.setText('0')   #set function on text.
