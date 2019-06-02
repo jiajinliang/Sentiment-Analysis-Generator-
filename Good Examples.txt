@@ -4,7 +4,6 @@ TP:
 Don't let the expensive location of Coronado Beach deter you from searching out this little pizza joint. Their handcrafted freshly made food should be enjoyed by all who visit beautiful San Diego.
 https://www.yelp.com/biz/high-tide-bottle-shop-and-kitchen-coronado-4?hrid=9Ei1thAJfYBkRJvmTWQHJQ&utm_campaign=www_review_share_popup&utm_medium=copy_link&utm_source=(direct)
 
-
 TN:
 Nice worker 4 stars. It's a simple liquor shop with quick bites. You can get a thin slice of pizza to go. They have tater tots, wings, sandwich and wraps. This is more if you are looking for something fast and mediocre to go with alcohol. I missed why where they voted "best pizza by locals?" It's not gourmet. I had pepperoni and it was just below ok. 
 https://www.yelp.com/biz/high-tide-bottle-shop-and-kitchen-coronado-4?hrid=l1clCQArQXf-9kSeUJr7XQ&utm_campaign=www_review_share_popup&utm_medium=copy_link&utm_source=(direct)
@@ -16,6 +15,36 @@ From Training set:
 
 199:
 Add me to the disappointed by Optical Experts list. And I'm also not happy that many of their reviews aren't showing up. People should be warned about this business. Like
+
+654:
+we ordered room service, 3 pizzas, under $60.  VERY thin crust, and not crisp at all, very doughy.  my sister LOVED hers, but maybe it's because she hadn't
+
+2200:
+Dirty! This place cannot be sanitary. The staff was arguing. It was not a pleasant experience at all. Go somewhere that is clean and where you can feel comfortable.
+
+FN with confident over 90%: (from dev)
+
+Cons: Not-so-friendly service and cash only. You don't spend much time with them anyways so it's not a big deal. Slightly expensive. The portion sizes are medium sized, so not
+
+Part2:
+
+FN:
+
+https://www.latimes.com/nation/nationnow/la-na-virginia-beach-shooting-20190602-story.html
+
+The gunman who opened fire in a Virginia Beach government building, killing 12 people, had notified a superior of his intention to leave his job, officials said Saturday.
+
+The assailant, who worked as a civil engineer, was an employee "in good standing" in his department, said City Manager Dave Hansen, who described the man's performance as "satisfactory."
+
+In response to a reporter's question, he said the shooter had notified his chain of command of his intention to quit via email on Friday, hours before the shooting.
+
+Authorities have identified the attacker as 40-year-old DeWayne Craddock. He was killed following a gun battle with police.
+
+Police Chief James Cervera said he had no information to indicate that the suspect targeted anyone specifically.
+
+Among the victims were four other engineers who worked to maintain streets and protect wetlands and three right-of-way agents who reviewed property lines. Others included an account clerk, a technician, an administrative assistant and a special projects coordinator. In all, they had served the city of Virginia Beach for more than 150 years.
+
+Police have declined to comment on the gunman's motive. City officials uttered his name just once and said they would not mention it again.
 
 
 
