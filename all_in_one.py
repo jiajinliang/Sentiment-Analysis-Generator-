@@ -429,18 +429,18 @@ class Model:
         
         figs = self.generate_graphs(input_string)
         figs[0].savefig("3.png")
-        figs[1].savefig("7.png")
-        figs[2].savefig("8.png")
+        figs[1].savefig("6.png")
+        figs[2].savefig("7.png")
         
         # dian's method using matplotlib to plot a DataFrame as table and 
-        decimals = pd.Series([3,5,5], index=['_Contribution_', '_TFIDF_', '_Coefficient_'])
-        df = df.round(decimals)
-        f = render_mpl_table(data=df, header_columns=0, col_width=2.5)
-        f.savefig('9.png')
+        # decimals = pd.Series([3,5,5], index=['_Contribution_', '_TFIDF_', '_Coefficient_'])
+        # df = df.round(decimals)
+        # f = render_mpl_table(data=df, header_columns=0, col_width=2.5)
+        # f.savefig('5.png')
         
         to_html(df_style,'table.html')
         subprocess.call(
-            'wkhtmltoimage -f png --width 0 table.html 10.png', shell=True)
+            'wkhtmltoimage -f png --width 0 table.html 5.png', shell=True)
 
         # this library works fine on linux and jupyter, but not supporting windows
 #         import imgkit
@@ -448,15 +448,15 @@ class Model:
 #         options = {"xvfb": ""}
 #         imgkit.from_string(html, "7.png")#, options=options)
         
-        output.append(5)
+        output.append(3)
         output.append(6)
         output.append(7)
         output.append(8)
         output.append(9)
-        output.append(10)
+        # output.append(10)
 
         
-        dic = {0:'s', 3:'3.png', 5:'Wordcloud_pos.png', 6:'Wordcloud_neg.png', 7:'7.png', 8:'8.png', 9:'9.png', 10:'10.png'}
+        dic = {0:'s',3:'3.png', 5:'5.png',6:'6.png', 7:'7.png', 8:'Wordcloud_pos_corp1.png', 9:'Wordcloud_neg_corp1.png'}
         return output, dic
     
 def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
