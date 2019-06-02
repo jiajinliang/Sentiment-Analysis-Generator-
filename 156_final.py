@@ -85,7 +85,7 @@ class Ui_Dialog(object):
 
 
         self.f=self.content.font()
-        self.f.setPointSize(33) # sets the size to 30
+        self.f.setPointSize(28) # sets the size to 30
         self.content.setFont(self.f)
 
         #self.label.setAlignment(Qt.AlignCenter)

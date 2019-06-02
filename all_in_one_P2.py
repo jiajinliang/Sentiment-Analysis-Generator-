@@ -75,6 +75,13 @@ class Model:
             res = "Prediction: REAL"
         else:
             res = "Prediction: FAKE"
+        if sentence in self.sentiment.train_data:
+            if self.sentiment.trainy[self.sentiment.train_data.index(sentence)] == 1:
+                res += "Label:\tREAL\n"
+            else:
+                res += "Label:\tFAKE\n"
+        else:
+            res += "Label:\tNOT AVAILABLE\n"
         print(res)
         return res
 
@@ -121,10 +128,11 @@ class Model:
                 oliver_algorithm.append(w)
 
     #     print("Words being ignored due to not appearing in training set are: ")
-        res = "Words being ignored due to not appearing in training set are: \n"
+        res = "WORDS BEING IGNORED WHEN VECTORIZING THE SENTENCE:\n\n"
+        res += "Words being ignored due to not appearing in training set are: \n"
         if len(unseen) == 0:
     #         print("None\n")
-            res += "None\n"
+            res += "\nNone\n"
         else:
     #         print(unseen)
     #         print('')
@@ -137,10 +145,10 @@ class Model:
             res += ']\n'
 
     #     print("Words being ignored due to mindf (unfrequent in corpus) are: ")
-        res += "Words being ignored due to mindf (unfrequent in corpus) are: \n"
+        res += "\nWords being ignored due to mindf (unfrequent in corpus) are: \n"
         if len(mindf) == 0:
     #         print("None\n")
-            res += "None\n"
+            res += "\nNone\n"
         else:
     #         print(mindf)
     #         print('')
@@ -153,10 +161,10 @@ class Model:
             res += ']\n'
 
     #     print("Words being ignored due to maxdf (too frequent in corpus) are: ")
-        res += "Words being ignored due to maxdf (too frequent in corpus) are: \n"
+        res += "\nWords being ignored due to maxdf (too frequent in corpus) are: \n"
         if len(maxdf) == 0:
     #         print("None\n")
-            res += "None\n"
+            res += "\nNone\n"
         else:
     #         print(maxdf)
     #         print('')
@@ -169,10 +177,10 @@ class Model:
             res += ']\n'
 
     #     print("Words being ignored due to our algorithm are: ")
-        res += "Words being ignored due to our algorithm are: \n"
+        res += "\nWords being ignored due to our algorithm are: \n"
         if len(oliver_algorithm) == 0:
     #         print("None\n")
-            res += "None\n"
+            res += "\nNone\n"
         else:
     #         print(oliver_algorithm)
     #         print('')
@@ -410,7 +418,7 @@ class Model:
         self.sentence = input_string
 
         output = ['0']
-        output.append(input_string) # original sentence
+        output.append("Input Sentence:\n\n"+input_string) # original sentence
         s = self.predict(input_string)
         output.append(s) # prediction
         df,df_style,s = self.analysis(input_string)

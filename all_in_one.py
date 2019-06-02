@@ -72,9 +72,16 @@ class Model:
         sentence_vect = self.vectorize_sentence(sentence)
         result = self.cls.predict(sentence_vect)
         if result[0] == 0:
-            res = "Prediction: NEGATIVE"
+            res = "Prediction: NEGATIVE\n\n"
         else:
-            res = "Prediction: POSITIVE"
+            res = "Prediction: POSITIVE\n\n"
+        if sentence in self.sentiment.train_data:
+            if self.sentiment.trainy[self.sentiment.train_data.index(sentence)] == 1:
+                res += "Label:\tPOSITIVE\n"
+            else:
+                res += "Label:\tNEGATIVE\n"
+        else:
+            res += "Label:\tNOT AVAILABLE\n"
         print(res)
         return res
 
@@ -121,10 +128,11 @@ class Model:
                 oliver_algorithm.append(w)
 
     #     print("Words being ignored due to not appearing in training set are: ")
-        res = "Words being ignored due to not appearing in training set are: \n"
+        res = "WORDS BEING IGNORED WHEN VECTORIZING THE SENTENCE:\n\n"
+        res += "Words being ignored due to not appearing in training set are: \n"
         if len(unseen) == 0:
     #         print("None\n")
-            res += "None\n"
+            res += "\nNone\n"
         else:
     #         print(unseen)
     #         print('')
@@ -137,10 +145,10 @@ class Model:
             res += ']\n'
 
     #     print("Words being ignored due to mindf (unfrequent in corpus) are: ")
-        res += "Words being ignored due to mindf (unfrequent in corpus) are: \n"
+        res += "\nWords being ignored due to mindf (unfrequent in corpus) are: \n"
         if len(mindf) == 0:
     #         print("None\n")
-            res += "None\n"
+            res += "\nNone\n"
         else:
     #         print(mindf)
     #         print('')
@@ -153,10 +161,10 @@ class Model:
             res += ']\n'
 
     #     print("Words being ignored due to maxdf (too frequent in corpus) are: ")
-        res += "Words being ignored due to maxdf (too frequent in corpus) are: \n"
+        res += "\nWords being ignored due to maxdf (too frequent in corpus) are: \n"
         if len(maxdf) == 0:
     #         print("None\n")
-            res += "None\n"
+            res += "\nNone\n"
         else:
     #         print(maxdf)
     #         print('')
@@ -169,10 +177,10 @@ class Model:
             res += ']\n'
 
     #     print("Words being ignored due to our algorithm are: ")
-        res += "Words being ignored due to our algorithm are: \n"
+        res += "\nWords being ignored due to our algorithm are: \n"
         if len(oliver_algorithm) == 0:
     #         print("None\n")
-            res += "None\n"
+            res += "\nNone\n"
         else:
     #         print(oliver_algorithm)
     #         print('')
@@ -379,7 +387,7 @@ class Model:
         sentence_vect, s_ignored = self.clean(sentence)
         tfidf_vect = sentiment.count_vect.transform([sentence])
         res = self.find_stop_words(s_ignored)
-        res += "Remaining words in the vec: \n["
+        res += "\nRemaining words in the vec: \n["
         for w in sentence_vect:
             if w == sentence_vect[-1]:
                 res += w
@@ -435,7 +443,7 @@ class Model:
         self.sentence = input_string
 
         output = ['0']
-        output.append(input_string) # original sentence
+        output.append('Input Sentence:\n\n'+input_string) # original sentence
         s = self.predict(input_string)
         output.append(s) # prediction
         df,df_style,s = self.analysis(input_string)
@@ -447,14 +455,14 @@ class Model:
         figs[2].savefig("6.png")
         
         # dian's method using matplotlib to plot a DataFrame as table and 
-#         decimals = pd.Series([3,5,5], index=['_Contribution_', '_TFIDF_', '_Coefficient_'])
-#         df = df.round(decimals)
-#         f = render_mpl_table(data=df, header_columns=0, col_width=2.5)
-#         f.savefig('7.png')
+        decimals = pd.Series([3,5,5], index=['_Contribution_', '_TFIDF_', '_Coefficient_'])
+        df = df.round(decimals)
+        f = render_mpl_table(data=df, header_columns=0, col_width=2.5)
+        f.savefig('7.png')
         
         to_html(df_style,'table.html')
         subprocess.call(
-            'wkhtmltoimage -f png --width 0 table.html 7.png', shell=True)
+            'wkhtmltoimage -f png --width 0 table.html 8.png', shell=True)
 
         # this library works fine on linux and jupyter, but not supporting windows
 #         import imgkit
@@ -466,10 +474,10 @@ class Model:
         output.append(5)
         output.append(6)
         output.append(7)
-#         output.append(8)
+        output.append(8)
 
         
-        dic = {0:'s', 4:'4.png', 5:'5.png', 6:'6.png', 7:'7.png'}
+        dic = {0:'s', 4:'4.png', 5:'5.png', 6:'6.png', 7:'7.png', 8:'8.png'}
         return output, dic
     
 def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
