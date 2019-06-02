@@ -132,7 +132,7 @@ class Model:
         res += "Words being ignored due to not appearing in training set are: \n"
         if len(unseen) == 0:
     #         print("None\n")
-            res += "\nNone\n"
+            res += "None\n"
         else:
     #         print(unseen)
     #         print('')
@@ -148,7 +148,7 @@ class Model:
         res += "\nWords being ignored due to mindf (unfrequent in corpus) are: \n"
         if len(mindf) == 0:
     #         print("None\n")
-            res += "\nNone\n"
+            res += "None\n"
         else:
     #         print(mindf)
     #         print('')
@@ -164,7 +164,7 @@ class Model:
         res += "\nWords being ignored due to maxdf (too frequent in corpus) are: \n"
         if len(maxdf) == 0:
     #         print("None\n")
-            res += "\nNone\n"
+            res += "None\n"
         else:
     #         print(maxdf)
     #         print('')
@@ -180,7 +180,7 @@ class Model:
         res += "\nWords being ignored due to our algorithm are: \n"
         if len(oliver_algorithm) == 0:
     #         print("None\n")
-            res += "\nNone\n"
+            res += "None\n"
         else:
     #         print(oliver_algorithm)
     #         print('')
@@ -447,22 +447,24 @@ class Model:
         s = self.predict(input_string)
         output.append(s) # prediction
         df,df_style,s = self.analysis(input_string)
+
+        output.append(3)
         output.append(s) # analysis
         
         figs = self.generate_graphs(input_string)
-        figs[0].savefig("4.png")
-        figs[1].savefig("5.png")
-        figs[2].savefig("6.png")
+        figs[0].savefig("3.png")
+        figs[1].savefig("7.png")
+        figs[2].savefig("8.png")
         
         # dian's method using matplotlib to plot a DataFrame as table and 
         decimals = pd.Series([3,5,5], index=['_Contribution_', '_TFIDF_', '_Coefficient_'])
         df = df.round(decimals)
         f = render_mpl_table(data=df, header_columns=0, col_width=2.5)
-        f.savefig('7.png')
+        f.savefig('9.png')
         
         to_html(df_style,'table.html')
         subprocess.call(
-            'wkhtmltoimage -f png --width 0 table.html 8.png', shell=True)
+            'wkhtmltoimage -f png --width 0 table.html 10.png', shell=True)
 
         # this library works fine on linux and jupyter, but not supporting windows
 #         import imgkit
@@ -470,14 +472,15 @@ class Model:
 #         options = {"xvfb": ""}
 #         imgkit.from_string(html, "7.png")#, options=options)
         
-        output.append(4)
         output.append(5)
         output.append(6)
         output.append(7)
         output.append(8)
+        output.append(9)
+        output.append(10)
 
         
-        dic = {0:'s', 4:'4.png', 5:'5.png', 6:'6.png', 7:'7.png', 8:'8.png'}
+        dic = {0:'s', 3:'3.png', 5:'Wordcloud_pos.png', 6:'Wordcloud_neg.png', 7:'7.png', 8:'8.png', 9:'9.png', 10:'10.png'}
         return output, dic
     
 def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
