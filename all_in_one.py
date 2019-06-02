@@ -240,11 +240,11 @@ class Model:
     #             print("Number of ",word,"in POSITIVE reviews: ",num_p,"\tNumber of ",word,"in NEGATIVE reviews: ",num_n,"\n")
                 num_p_list.append(num_p)
                 num_n_list.append(num_n)
-        dic = {'Feature':word_list, 'Coef':coef_list, 'in POSITIVE':num_p_list,
-              'in NEGATIVE':num_n_list, 'tfidf val':tfidf_list, 'Original Count':count_list,
-              'Contribution':contribution_list}
+        dic = {'_Feature_':word_list, '_Coefficient_':coef_list, '_POSITIVE_':num_p_list,
+              '_NEGATIVE_':num_n_list, '_TFIDF_':tfidf_list, '_Count_':count_list,
+              '_Contribution_':contribution_list}
         df = pd.DataFrame(dic)
-        df = df[['Feature','Contribution','Original Count','tfidf val','Coef','in POSITIVE','in NEGATIVE']]
+        df = df[['_Feature_','_Contribution_','_Count_','_TFIDF_','_Coefficient_','_POSITIVE_','_NEGATIVE_']]
     #     print(df)
         return df
 
@@ -390,10 +390,16 @@ class Model:
     #     print("Remaining words in the vec:")
     #     print(sentence_vect)
         df = self.find_coef(sentence_vect, tfidf_vect)
-        df_style = df.style.applymap(self.color_negative_red, subset=['Coef','Contribution']).\
-            apply(self.highlight_max, subset=['Coef','Contribution']).\
-            apply(self.highlight_min, subset=['Coef','Contribution'])
+        decimals = pd.Series([4,4,4], index=['_Contribution_', '_TFIDF_', '_Coefficient_'])
+        df = df.round(decimals)
+        df_style = df.style.applymap(self.color_negative_red, subset=['_Coefficient_','_Contribution_']).\
+            apply(self.highlight_max, subset=['_Coefficient_','_Contribution_']).\
+            apply(self.highlight_min, subset=['_Coefficient_','_Contribution_'])
     #     df = df.style.apply(highlight_max)
+    
+        # set column width and centered text
+        df_style = df_style.set_properties(**{'width': '100px', 'text-align': 'center'})
+        
         return df,df_style,res
 
 
@@ -441,14 +447,14 @@ class Model:
         figs[2].savefig("6.png")
         
         # dian's method using matplotlib to plot a DataFrame as table and 
-        decimals = pd.Series([3,5,5], index=['Contribution', 'tfidf val', 'Coef'])
-        df = df.round(decimals)
-        f = render_mpl_table(data=df, header_columns=0, col_width=2.5)
-        f.savefig('7.png')
+#         decimals = pd.Series([3,5,5], index=['_Contribution_', '_TFIDF_', '_Coefficient_'])
+#         df = df.round(decimals)
+#         f = render_mpl_table(data=df, header_columns=0, col_width=2.5)
+#         f.savefig('7.png')
         
         to_html(df_style,'table.html')
         subprocess.call(
-            'wkhtmltoimage -f png --width 0 table.html 8.png', shell=True)
+            'wkhtmltoimage -f png --width 0 table.html 7.png', shell=True)
 
         # this library works fine on linux and jupyter, but not supporting windows
 #         import imgkit
@@ -460,10 +466,10 @@ class Model:
         output.append(5)
         output.append(6)
         output.append(7)
-        output.append(8)
+#         output.append(8)
 
         
-        dic = {0:'s', 4:'4.png', 5:'5.png', 6:'6.png', 7:'7.png', 8:'8.png'}
+        dic = {0:'s', 4:'4.png', 5:'5.png', 6:'6.png', 7:'7.png'}
         return output, dic
     
 def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
