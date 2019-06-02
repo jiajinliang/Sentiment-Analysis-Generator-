@@ -399,37 +399,40 @@ class Model:
         s = self.predict(input_string)
         output.append(s) # prediction
         df,df_style,s = self.analysis(input_string)
-        output.append(s) # analysis
-        
+
         figs = self.generate_graphs(input_string)
-        figs[0].savefig("4.png")
-        figs[1].savefig("5.png")
-        figs[2].savefig("6.png")
+        output.append(3)
+        figs[0].savefig("3.png") # pi chart
+
+        output.append(s) # analysis (4)
+
+        output.append(5) # highlight (5)
+        to_html(df_style,'table.html')
+        subprocess.call(
+            'wkhtmltoimage -f png --width 0 table.html 5.png', shell=True)
+        
+        output.append(6)
+        output.append(7)
+        figs[1].savefig("6.png")
+        figs[2].savefig("7.png")
         
         # dian's method using matplotlib to plot a DataFrame as table and 
 #         decimals = pd.Series([4,4,4], index=['_Contribution_', '_TFIDF_', '_Coefficient_'])
 #         df = df.round(decimals)
 #         f = render_mpl_table(data=df, header_columns=0, col_width=2.5)
 #         f.savefig('7.png')
-        
-        to_html(df_style,'table.html')
-        subprocess.call(
-            'wkhtmltoimage -f png --width 0 table.html 7.png', shell=True)
 
         # this library works fine on linux and jupyter, but not supporting windows
 #         import imgkit
 #         html = df.render()
 #         options = {"xvfb": ""}
 #         imgkit.from_string(html, "7.png")#, options=options)
-        
-        output.append(4)
-        output.append(5)
-        output.append(6)
-        output.append(7)
-#         output.append(8)
+  
+        output.append(8)        
+        output.append(9)
 
         
-        dic = {0:'s', 4:'4.png', 5:'5.png', 6:'6.png', 7:'7.png'}
+        dic = {0:'s', 3:'3.png', 5:'5.png', 6:'6.png', 7:'7.png', 8:'image/wordcloud_real.png', 9:'mage/wordcloud_fake.png'}
         return output, dic
     
 def render_mpl_table(data, col_width=3.0, row_height=0.625, font_size=14,
