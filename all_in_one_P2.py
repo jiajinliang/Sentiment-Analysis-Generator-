@@ -72,9 +72,9 @@ class Model:
         sentence_vect = self.vectorize_sentence(sentence)
         result = self.cls.predict(sentence_vect)
         if result[0] == 0:
-            res = "Prediction: REAL"
+            res = "Prediction: REAL\n\n"
         else:
-            res = "Prediction: FAKE"
+            res = "Prediction: FAKE\n\n"
         if sentence in self.sentiment.train_data:
             if self.sentiment.trainy[self.sentiment.train_data.index(sentence)] == 1:
                 res += "Label:\tREAL\n"
@@ -132,65 +132,42 @@ class Model:
         res += "Words being ignored due to not appearing in training set are: \n"
         if len(unseen) == 0:
     #         print("None\n")
-            res += "\nNone\n"
+            res += "None\n"
         else:
     #         print(unseen)
     #         print('')
-            res += '['
-            for w in unseen:
-                if w == unseen[-1]:
-                    res += w
-                else:
-                    res += w + ', '
-            res += ']\n'
+            res += '[' + ', '.join(set(unseen)) + ']\n'
 
     #     print("Words being ignored due to mindf (unfrequent in corpus) are: ")
         res += "\nWords being ignored due to mindf (unfrequent in corpus) are: \n"
         if len(mindf) == 0:
     #         print("None\n")
-            res += "\nNone\n"
+            res += "None\n"
         else:
     #         print(mindf)
     #         print('')
-            res += '['
-            for w in mindf:
-                if w == mindf[-1]:
-                    res += w
-                else:
-                    res += w + ', '
-            res += ']\n'
+            res += '[' + ', '.join(set(mindf)) + ']\n'
 
     #     print("Words being ignored due to maxdf (too frequent in corpus) are: ")
         res += "\nWords being ignored due to maxdf (too frequent in corpus) are: \n"
         if len(maxdf) == 0:
     #         print("None\n")
-            res += "\nNone\n"
+            res += "None\n"
         else:
     #         print(maxdf)
     #         print('')
-            res += '['
-            for w in maxdf:
-                if w == maxdf[-1]:
-                    res += w
-                else:
-                    res += w + ', '
-            res += ']\n'
+            res += '[' + ', '.join(set(maxdf)) + ']\n'
 
     #     print("Words being ignored due to our algorithm are: ")
         res += "\nWords being ignored due to our algorithm are: \n"
         if len(oliver_algorithm) == 0:
     #         print("None\n")
-            res += "\nNone\n"
+            res += "None\n"
         else:
     #         print(oliver_algorithm)
     #         print('')
-            res += '['
-            for w in oliver_algorithm:
-                if w == oliver_algorithm[-1]:
-                    res += w
-                else:
-                    res += w + ', '
-            res += ']\n'
+            res += '[' + ', '.join(set(oliver_algorithm)) + ']\n'
+        
         return res
 
     def explain_coef(self):
@@ -392,7 +369,7 @@ class Model:
         sentence_vect, s_ignored = self.clean(sentence)
         tfidf_vect = sentiment.count_vect.transform([sentence])
         res = self.find_stop_words(s_ignored)
-        res += "Remaining words in the vec: \n["
+        res += "\nRemaining words in the vec: \n["
         for w in sentence_vect:
             if w == sentence_vect[-1]:
                 res += w

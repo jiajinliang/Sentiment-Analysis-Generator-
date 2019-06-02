@@ -136,13 +136,7 @@ class Model:
         else:
     #         print(unseen)
     #         print('')
-            res += '['
-            for w in unseen:
-                if w == unseen[-1]:
-                    res += w
-                else:
-                    res += w + ', '
-            res += ']\n'
+            res += '[' + ', '.join(set(unseen)) + ']\n'
 
     #     print("Words being ignored due to mindf (unfrequent in corpus) are: ")
         res += "\nWords being ignored due to mindf (unfrequent in corpus) are: \n"
@@ -152,13 +146,7 @@ class Model:
         else:
     #         print(mindf)
     #         print('')
-            res += '['
-            for w in mindf:
-                if w == mindf[-1]:
-                    res += w
-                else:
-                    res += w + ', '
-            res += ']\n'
+            res += '[' + ', '.join(set(mindf)) + ']\n'
 
     #     print("Words being ignored due to maxdf (too frequent in corpus) are: ")
         res += "\nWords being ignored due to maxdf (too frequent in corpus) are: \n"
@@ -168,13 +156,7 @@ class Model:
         else:
     #         print(maxdf)
     #         print('')
-            res += '['
-            for w in maxdf:
-                if w == maxdf[-1]:
-                    res += w
-                else:
-                    res += w + ', '
-            res += ']\n'
+            res += '[' + ', '.join(set(maxdf)) + ']\n'
 
     #     print("Words being ignored due to our algorithm are: ")
         res += "\nWords being ignored due to our algorithm are: \n"
@@ -184,13 +166,7 @@ class Model:
         else:
     #         print(oliver_algorithm)
     #         print('')
-            res += '['
-            for w in oliver_algorithm:
-                if w == oliver_algorithm[-1]:
-                    res += w
-                else:
-                    res += w + ', '
-            res += ']\n'
+            res += '[' + ', '.join(set(oliver_algorithm)) + ']\n'
         return res
 
     def explain_coef(self):
